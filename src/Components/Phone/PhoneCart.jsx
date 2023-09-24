@@ -1,11 +1,36 @@
+import swal from "sweetalert";
 
 
 const PhoneCart = ({phone}) => {
-    const {image, phone_name, brand_name} = phone || {};
+    const {id, image, phone_name, brand_name} = phone || {};
     // console.log(phone);
 
     const handleAddToFavorite = () =>{
-        console.log(phone);
+
+        const addedToFavorite = [];
+        
+        const favorites = JSON.parse(localStorage.getItem('favorites'));
+
+        if(!favorites){
+            addedToFavorite.push(phone);
+            localStorage.setItem('favorites', JSON.stringify(addedToFavorite));
+            swal("Good job!", "Product Added favorite successfully!", "success");
+        }
+        
+        else{
+
+            const isExist = favorites.find(phone => phone.id === id);
+
+            if(!isExist){
+            addedToFavorite.push(...favorites, phone);
+            localStorage.setItem('favorites', JSON.stringify(addedToFavorite));
+            swal("Good job!", "Product Added favorite successfully!", "success");
+            } else {
+                swal("Error!", "no duplicate!", "error");
+            }
+
+            
+        }
     }
 
     return (
