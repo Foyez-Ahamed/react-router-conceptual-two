@@ -1,7 +1,22 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 
 const Navbar = () => {
+
+    const {user, userLogout} = useContext(AuthContext);
+
+    const handleUserLogout = () => {
+        userLogout()
+        .then(() => {
+            console.log('User logout successfully');
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+
     return (
         <div className="max-w-screen-xl mx-auto px-8 md:px-16 lg:px-16 py-5 my-5">
             <nav className="flex justify-between shadow-md py-4 px-1">
@@ -17,7 +32,11 @@ const Navbar = () => {
 
                     <NavLink to='/favorite' className={({isActive, isPending}) => isActive? 'text-purple-700 underline' : isPending? 'pending' : ""}><li>Favorites</li></NavLink>
 
-                    <NavLink to='login' className={({isActive, isPending}) => isActive? 'text-purple-700 underline' : isPending? 'pending' : ""}><li>Login</li></NavLink>
+                    {
+                        user ? <NavLink className={({isActive, isPending}) => isActive? 'text-purple-700 underline' : isPending? 'pending' : ""}><li onClick={handleUserLogout}>Logout</li></NavLink> : 
+
+                        <NavLink to='/login' className={({isActive, isPending}) => isActive? 'text-purple-700 underline' : isPending? 'pending' : ""}><li>Login</li></NavLink>
+                    }
                 </ul>
                 </div>
             </nav>

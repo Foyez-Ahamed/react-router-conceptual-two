@@ -4,6 +4,8 @@ import Home from "../Pages/Home/Home";
 import Favorite from "../Pages/Favorite/Favorite";
 import Login from "../Pages/Login/Login";
 import Phone from "../Components/Phone/Phone";
+import Register from "../Pages/Register/Register";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 
 const MyCreatedRouter = createBrowserRouter([
@@ -22,12 +24,17 @@ const MyCreatedRouter = createBrowserRouter([
             },
             {
                 path : '/phone/:id',
-                element : <Phone></Phone>,
+                element : <PrivateRoute><Phone></Phone></PrivateRoute>,
                 loader : () => fetch('/phones.json')
             },
             {
                 path : '/login',
                 element : <Login></Login>
+            },
+
+            {
+                path : '/register',
+                element : <Register></Register>
             }
         ]
     }
